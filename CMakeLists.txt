@@ -17,4 +17,10 @@ add_compile_options(-Wall
         -Wno-maybe-uninitialized
         )
 
-add_subdirectory(nopeusmittari)
+add_executable(nopeusmittari
+    nopeusmittari.c
+)
+
+target_link_libraries(nopeusmittari pico_stdlib)
+
+pico_add_extra_outputs(nopeusmittari)
