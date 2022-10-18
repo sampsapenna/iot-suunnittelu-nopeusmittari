@@ -4,6 +4,19 @@
 #define OPTOENCODER_GPIO_PIN 22
 #endif
 
+// Rim length in millimeters, distance traveled with single rotation
+// defaults to 700x28c/28-622 = (635 + 28 + 28) * 3.14159 ≈ 2170
+// Define to length per rotation
+#ifndef LENGTH_PER_ROTATION
+#define LENGTH_PER_ROTATION 2170
+#endif
+
+// Pulses per rotation, for different types of encoding disks
+#ifndef PULSES_PER_ROTATION
+#define PULSES_PER_ROTATION 1
+#endif
+
+
 int setup() {
 #ifndef PICO_DEFAULT_LED_PIN
 #warning blink example requires a board with a regular LED
@@ -18,6 +31,7 @@ int setup() {
     gpio_init(OPTOENCODER_GPIO_PIN);
     gpio_set_dir(OPTOENCODER_GPIO_PIN, GPIO_IN);
     gpio_set_pulls(OPTOENCODER_GPIO_PIN, false, false);
+    gpio_set_input_hysteresis_enabled(OPTOENCODER_GPIO_PIN, true);
 
     return 0;
 }
@@ -29,7 +43,7 @@ int loop() {
 
         gpio_put(PICO_DEFAULT_LED_PIN, opto_status > 0 ? true : false);
 
-        sleep_us(100);
+        sleep_ms(1);
     }
     return 0;
 }
