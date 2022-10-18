@@ -23,6 +23,11 @@ add_executable(nopeusmittari
     nopeusmittari.c
 )
 
-target_link_libraries(nopeusmittari pico_stdlib)
+add_subdirectory("Grove_LCD_RGB_Backlight")
+
+target_include_directories(rgb_lcd PUBLIC "Grove_LCD_RGB_Backlight")
+target_link_directories(rgb_lcd PUBLIC "Grove_LCD_RGB_Backlight")
+
+target_link_libraries(nopeusmittari pico_stdlib hardware_i2c rgb_lcd pico_binary_info)
 
 pico_add_extra_outputs(nopeusmittari)
