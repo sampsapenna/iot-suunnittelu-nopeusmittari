@@ -1,8 +1,10 @@
-# Pull in SDK (must be before project)
-include(pico-sdk/pico_sdk_import.cmake)
+cmake_minimum_required(VERSION 3.12)
 
-project(iot_suunnittelun_perusteet_nopeusmittari)
-set(CMAKE_C_STANDARD 99)
+# Pull in SDK (must be before project)
+include(pico-sdk/external/pico_sdk_import.cmake)
+
+project(iot_suunnittelun_perusteet_nopeusmittari C CXX ASM)
+set(CMAKE_C_STANDARD 11)
 
 if (PICO_SDK_VERSION_STRING VERSION_LESS "1.4.0")
     message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.4.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
