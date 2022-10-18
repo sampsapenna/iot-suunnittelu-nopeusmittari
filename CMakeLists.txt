@@ -1,5 +1,5 @@
 # Pull in SDK (must be before project)
-include(pico_sdk_import.cmake)
+include(pico-sdk/pico_sdk_import.cmake)
 
 project(iot_suunnittelun_perusteet_nopeusmittari)
 set(CMAKE_C_STANDARD 99)
