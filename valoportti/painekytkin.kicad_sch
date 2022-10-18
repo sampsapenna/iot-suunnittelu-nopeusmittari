@@ -763,7 +763,7 @@
   (symbol (lib_id "power:GND") (at 233.68 139.7 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 1bed61ce-b97f-4149-add4-961c945fd1bc)
-    (property "Reference" "#PWR?" (id 0) (at 233.68 146.05 0)
+    (property "Reference" "#PWR05" (id 0) (at 233.68 146.05 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 233.68 144.78 0))
@@ -795,7 +795,7 @@
   (symbol (lib_id "Connector:TestPoint") (at 247.65 106.68 270) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 3845f39a-1325-4724-a5c7-74584df9f70c)
-    (property "Reference" "TP?" (id 0) (at 252.73 105.4099 90)
+    (property "Reference" "TP2" (id 0) (at 252.73 105.4099 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "TestPoint" (id 1) (at 252.73 107.9499 90)
@@ -813,7 +813,7 @@
   (symbol (lib_id "Device:LED") (at 175.26 123.19 90) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 3b4c917c-52d5-462c-95c1-773cbc93a2b6)
-    (property "Reference" "D?" (id 0) (at 179.07 123.5074 90)
+    (property "Reference" "D4" (id 0) (at 179.07 123.5074 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "LED" (id 1) (at 179.07 126.0474 90)
@@ -832,7 +832,7 @@
   (symbol (lib_id "Transistor_BJT:BC547") (at 212.09 115.57 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 3deedf83-48a4-4c7f-a205-07f645d1a6c4)
-    (property "Reference" "Q?" (id 0) (at 217.17 114.2999 0)
+    (property "Reference" "Q4" (id 0) (at 217.17 114.2999 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "BC547" (id 1) (at 217.17 116.8399 0)
@@ -888,7 +888,7 @@
   (symbol (lib_id "Device:LED") (at 186.69 123.19 270) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 51e34bb6-0d12-41f5-b330-2b1032aedf7a)
-    (property "Reference" "D?" (id 0) (at 189.23 120.3324 90)
+    (property "Reference" "D5" (id 0) (at 189.23 120.3324 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "LED" (id 1) (at 189.23 122.8724 90)
@@ -907,7 +907,7 @@
   (symbol (lib_id "power:+3.3V") (at 214.63 91.44 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 5260fcac-ebfd-4aa8-991f-972aba159a61)
-    (property "Reference" "#PWR?" (id 0) (at 214.63 95.25 0)
+    (property "Reference" "#PWR04" (id 0) (at 214.63 95.25 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (id 1) (at 214.63 86.36 0))
@@ -992,7 +992,7 @@
   (symbol (lib_id "Device:R") (at 196.85 115.57 270) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 5e8a4e0a-64ca-4013-a037-ae6218497a1b)
-    (property "Reference" "R?" (id 0) (at 196.85 109.22 90))
+    (property "Reference" "R7" (id 0) (at 196.85 109.22 90))
     (property "Value" "R12k" (id 1) (at 196.85 111.76 90))
     (property "Footprint" "" (id 2) (at 196.85 113.792 90)
       (effects (font (size 1.27 1.27)) hide)
@@ -1007,7 +1007,7 @@
   (symbol (lib_id "Device:R") (at 168.91 115.57 90) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 79ed84ec-da69-42cc-8bf0-865adb4cb48b)
-    (property "Reference" "R?" (id 0) (at 168.91 109.22 90))
+    (property "Reference" "R6" (id 0) (at 168.91 109.22 90))
     (property "Value" "R56" (id 1) (at 168.91 111.76 90))
     (property "Footprint" "" (id 2) (at 168.91 117.348 90)
       (effects (font (size 1.27 1.27)) hide)
@@ -1057,7 +1057,7 @@
   (symbol (lib_id "power:GND") (at 161.29 132.08 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 86fc3bd4-8f9e-4006-8a25-85c1a75dc525)
-    (property "Reference" "#PWR?" (id 0) (at 161.29 138.43 0)
+    (property "Reference" "#PWR03" (id 0) (at 161.29 138.43 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 161.29 137.16 0))
@@ -1073,7 +1073,7 @@
   (symbol (lib_id "power:+3.3V") (at 116.84 27.94 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 89aaad01-246b-44f3-81f6-c3fa90274c74)
-    (property "Reference" "#PWR?" (id 0) (at 116.84 31.75 0)
+    (property "Reference" "#PWR01" (id 0) (at 116.84 31.75 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (id 1) (at 116.84 22.86 0))
@@ -1154,7 +1154,7 @@
   (symbol (lib_id "power:VCC") (at 161.29 115.57 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid d3a83e03-332b-4204-a382-59c990440b63)
-    (property "Reference" "#PWR?" (id 0) (at 161.29 119.38 0)
+    (property "Reference" "#PWR02" (id 0) (at 161.29 119.38 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "VCC" (id 1) (at 161.29 110.49 0))
@@ -1170,7 +1170,7 @@
   (symbol (lib_id "Transistor_BJT:BC547") (at 231.14 127 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid dc869806-fad8-4cf9-9dc4-027d29f1157b)
-    (property "Reference" "Q?" (id 0) (at 236.22 125.7299 0)
+    (property "Reference" "Q5" (id 0) (at 236.22 125.7299 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "BC547" (id 1) (at 236.22 128.2699 0)
@@ -1206,7 +1206,7 @@
   (symbol (lib_id "Device:R") (at 214.63 97.79 180) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid fe683913-4029-4e7b-889f-3763693d3316)
-    (property "Reference" "R?" (id 0) (at 217.17 96.5199 0)
+    (property "Reference" "R8" (id 0) (at 217.17 96.5199 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Value" "R12k" (id 1) (at 217.17 99.0599 0)
@@ -1227,6 +1227,21 @@
   )
 
   (symbol_instances
+    (path "/89aaad01-246b-44f3-81f6-c3fa90274c74"
+      (reference "#PWR01") (unit 1) (value "+3.3V") (footprint "")
+    )
+    (path "/d3a83e03-332b-4204-a382-59c990440b63"
+      (reference "#PWR02") (unit 1) (value "VCC") (footprint "")
+    )
+    (path "/86fc3bd4-8f9e-4006-8a25-85c1a75dc525"
+      (reference "#PWR03") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/5260fcac-ebfd-4aa8-991f-972aba159a61"
+      (reference "#PWR04") (unit 1) (value "+3.3V") (footprint "")
+    )
+    (path "/1bed61ce-b97f-4149-add4-961c945fd1bc"
+      (reference "#PWR05") (unit 1) (value "GND") (footprint "")
+    )
     (path "/2710818b-9b7a-42f1-b4a4-5012463263a7"
       (reference "#PWR0101") (unit 1) (value "GND") (footprint "")
     )
@@ -1239,21 +1254,6 @@
     (path "/eedc3e66-4557-45e2-88c7-99b41e1553df"
       (reference "#PWR0104") (unit 1) (value "VCC") (footprint "")
     )
-    (path "/1bed61ce-b97f-4149-add4-961c945fd1bc"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/5260fcac-ebfd-4aa8-991f-972aba159a61"
-      (reference "#PWR?") (unit 1) (value "+3.3V") (footprint "")
-    )
-    (path "/86fc3bd4-8f9e-4006-8a25-85c1a75dc525"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/89aaad01-246b-44f3-81f6-c3fa90274c74"
-      (reference "#PWR?") (unit 1) (value "+3.3V") (footprint "")
-    )
-    (path "/d3a83e03-332b-4204-a382-59c990440b63"
-      (reference "#PWR?") (unit 1) (value "VCC") (footprint "")
-    )
     (path "/5c378429-9b24-44a9-8c23-a863241e2750"
       (reference "D1") (unit 1) (value "LED") (footprint "")
     )
@@ -1264,10 +1264,10 @@
       (reference "D3") (unit 1) (value "D Schottky x5 Vf=2.5V") (footprint "")
     )
     (path "/3b4c917c-52d5-462c-95c1-773cbc93a2b6"
-      (reference "D?") (unit 1) (value "LED") (footprint "")
+      (reference "D4") (unit 1) (value "LED") (footprint "")
     )
     (path "/51e34bb6-0d12-41f5-b330-2b1032aedf7a"
-      (reference "D?") (unit 1) (value "LED") (footprint "")
+      (reference "D5") (unit 1) (value "LED") (footprint "")
     )
     (path "/4654e364-134c-4319-9ec8-84995283aaa2"
       (reference "Q1") (unit 1) (value "BC547") (footprint "Package_TO_SOT_THT:TO-92_Inline")
@@ -1279,10 +1279,10 @@
       (reference "Q3") (unit 1) (value "BC547") (footprint "Package_TO_SOT_THT:TO-92_Inline")
     )
     (path "/3deedf83-48a4-4c7f-a205-07f645d1a6c4"
-      (reference "Q?") (unit 1) (value "BC547") (footprint "Package_TO_SOT_THT:TO-92_Inline")
+      (reference "Q4") (unit 1) (value "BC547") (footprint "Package_TO_SOT_THT:TO-92_Inline")
     )
     (path "/dc869806-fad8-4cf9-9dc4-027d29f1157b"
-      (reference "Q?") (unit 1) (value "BC547") (footprint "Package_TO_SOT_THT:TO-92_Inline")
+      (reference "Q5") (unit 1) (value "BC547") (footprint "Package_TO_SOT_THT:TO-92_Inline")
     )
     (path "/b58e92e1-ab7e-4195-b00a-13e80508d8b6"
       (reference "R1") (unit 1) (value "R56") (footprint "")
@@ -1299,20 +1299,20 @@
     (path "/cbb99924-2085-48ce-920f-4be46c78ccac"
       (reference "R5") (unit 1) (value "R12k") (footprint "")
     )
-    (path "/5e8a4e0a-64ca-4013-a037-ae6218497a1b"
-      (reference "R?") (unit 1) (value "R12k") (footprint "")
-    )
     (path "/79ed84ec-da69-42cc-8bf0-865adb4cb48b"
-      (reference "R?") (unit 1) (value "R56") (footprint "")
+      (reference "R6") (unit 1) (value "R56") (footprint "")
+    )
+    (path "/5e8a4e0a-64ca-4013-a037-ae6218497a1b"
+      (reference "R7") (unit 1) (value "R12k") (footprint "")
     )
     (path "/fe683913-4029-4e7b-889f-3763693d3316"
-      (reference "R?") (unit 1) (value "R12k") (footprint "")
+      (reference "R8") (unit 1) (value "R12k") (footprint "")
     )
     (path "/0ae3d527-0f2e-4f13-b015-a629a93d7ccd"
       (reference "TP1") (unit 1) (value "TestPoint") (footprint "")
     )
     (path "/3845f39a-1325-4724-a5c7-74584df9f70c"
-      (reference "TP?") (unit 1) (value "TestPoint") (footprint "")
+      (reference "TP2") (unit 1) (value "TestPoint") (footprint "")
     )
   )
 )
