@@ -38,12 +38,29 @@ int setup() {
 
 int loop() {
     int opto_status = 0;
+    int elapsed_time=0;
+    bool last_tick_opto_status=false;
+    float speed_ms=0;
+
+
     while(1) {
         opto_status = gpio_get(OPTOENCODER_GPIO_PIN);
 
         gpio_put(PICO_DEFAULT_LED_PIN, opto_status > 0 ? true : false);
 
+        if (opto_status){
+            if (!last_tick_opto_status){
+                last_tick_opto_status=true;
+                speed_ms=LENGTH_PER_ROTATION/elapsed_time;
+                elapsed_time=0;
+            }
+        }else{
+            last_tick_opto_status=false;
+        }
+
+
         sleep_ms(1);
+        elapsed_time+=1;
     }
     return 0;
 }
