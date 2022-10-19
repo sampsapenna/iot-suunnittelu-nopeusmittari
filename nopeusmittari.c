@@ -128,7 +128,7 @@ int loop() {
         if (opto_status) {
             if (!last_tick_opto_status) {
                 last_tick_opto_status = true;
-                speed_ms = (float)LENGTH_PER_ROTATION / (float)PULSES_PER_ROTATION / (float)elapsed_time;
+                speed_ms = (float)LENGTH_PER_ROTATION / (float)PULSES_PER_ROTATION / (float)elapsed_time * 3.6;
                 if (elapsed_time > 0) {
                     sprintf(cur, "%.2f", speed_ms);
                 } else {
