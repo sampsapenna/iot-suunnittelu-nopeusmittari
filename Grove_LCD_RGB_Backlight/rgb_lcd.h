@@ -118,7 +118,7 @@ struct Displaystate {
 // Constructor / initiator
 struct Displaystate *rgb_lcd(void);
 
-void begin(struct Displaystate *disp, uint32_t cols, uint32_t rows, uint32_t charsize);
+void begin(struct Displaystate *disp, uint32_t cols, uint32_t rows);
 
 void clear(struct Displaystate *disp);
 void home(struct Displaystate *disp);
@@ -146,12 +146,8 @@ void setRGB(struct Displaystate *disp, unsigned char r, unsigned char g, unsigne
 void setPWM(struct Displaystate *disp, unsigned char color, unsigned char pwm); // set pwm
 
 void setColor(struct Displaystate *disp, unsigned char color);
-void setColorAll(struct Displaystate *disp) {
-    setRGB(disp, 0, 0, 0);
-}
-void setColorWhite(struct Displaystate *disp) {
-    setRGB(disp, 255, 255, 255);
-}
+void setColorAll(struct Displaystate *disp);
+void setColorWhite(struct Displaystate *disp);
 
 // blink the LED backlight
 void blinkLED(struct Displaystate *disp);

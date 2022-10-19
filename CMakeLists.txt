@@ -30,4 +30,7 @@ target_link_directories(rgb_lcd PUBLIC "Grove_LCD_RGB_Backlight")
 
 target_link_libraries(nopeusmittari pico_stdlib hardware_i2c rgb_lcd pico_binary_info)
 
+pico_enable_stdio_usb(nopeusmittari 1)
+pico_enable_stdio_uart(nopeusmittari 0)
+
 pico_add_extra_outputs(nopeusmittari)

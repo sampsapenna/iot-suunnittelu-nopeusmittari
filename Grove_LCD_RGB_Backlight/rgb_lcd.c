@@ -71,7 +71,7 @@ struct Displaystate *rgb_lcd(void) {
     return disp;
 }
 
-void begin(struct Displaystate *disp, uint32_t cols, uint32_t rows, uint32_t charsize) {
+void begin(struct Displaystate *disp, uint32_t cols, uint32_t rows) {
     disp->_displayfunction |= LCD_2LINE;
 
     disp->_numlines = 2;
@@ -335,4 +335,12 @@ void setColor(struct Displaystate *disp, unsigned char color) {
         return ;
     }
     setRGB(disp, color_define[color][0], color_define[color][1], color_define[color][2]);
+}
+
+void setColorAll(struct Displaystate *disp) {
+    setRGB(disp, 0, 0, 0);
+}
+
+void setColorWhite(struct Displaystate *disp) {
+    setRGB(disp, 255, 255, 255);
 }
