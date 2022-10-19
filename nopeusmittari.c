@@ -51,7 +51,7 @@ int loop() {
         if (opto_status){
             if (!last_tick_opto_status){
                 last_tick_opto_status=true;
-                speed_ms=LENGTH_PER_ROTATION/elapsed_time;
+                speed_ms=LENGTH_PER_ROTATION/PULSES_PER_ROTATION/elapsed_time;
                 elapsed_time=0;
             }
         }else{
