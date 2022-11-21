@@ -73,7 +73,7 @@ uint8_t  resetSensor(struct DHT20 *sens)
     if (sens->_resetRegister(0x1B)) count++;
     if (sens->_resetRegister(0x1C)) count++;
     if (sens->_resetRegister(0x1E)) count++;
-    delay(10);
+    sleep_ms(10);
   }
   return count;
 }
@@ -287,11 +287,11 @@ uint8_t  readStatus(struct DHT20 *sens)
    uint8_t mes =0x71;
     i2c_write_blocking(GROVE_I2C_INST,DHT20_ADDRESS,&mes,1,false);
 
-  delay(1);  //  needed to stabilize timing
+  sleep_ms(1);  //  needed to stabilize timing
   //_wire->requestFrom(DHT20_ADDRESS, (uint8_t)1);
     i2c_read_blocking(GROVE_I2C_INST,DHT20_ADDRESS,*bytes,1,false);
   //en tiedä millä vaihtaa
-  delay(1);  //  needed to stabilize timing
+  sleep_ms(1);  //  needed to stabilize timing
 
 
 
@@ -394,7 +394,7 @@ bool  _resetRegister(uint8_t reg)
     i2c_write_blocking(GROVE_I2C_INST,DHT20_ADDRESS,&nill,1,false);
     i2c_write_blocking(GROVE_I2C_INST,DHT20_ADDRESS,&nill,1,false);
 
-  delay(5);
+  sleep_ms(5);
     uint8_t dummy[4];
 
   //int bytes = _wire->requestFrom(DHT20_ADDRESS, (uint8_t)3); 
@@ -414,7 +414,7 @@ bool  _resetRegister(uint8_t reg)
         i2c_read_blocking(GROVE_I2C_INST,DHT20_ADDRESS,&value,bytes,false);
 
 
-        delay(10);
+        sleep_ms(10);
 
 uint8_t val =0xB0 | reg;
 /*
@@ -435,7 +435,7 @@ uint8_t val =0xB0 | reg;
 
 
 
-  delay(5);
+  sleep_ms(5);
   return true;
 }
 
