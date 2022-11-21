@@ -40,11 +40,10 @@ void DHT20_init(struct DHT20 *sens){
 //tämä tuntuu tarpeettomalta i2c hommassa. i2c init kutsutaan mainissa sitten kun se tarvitaan kutsua
 bool  begin(struct DHT20 *sens)
 {
-    i2c_init(GROVE_I2C_INST,200*1000);
     //200k magic num is gotten from original github page
   //_wire->begin();
   //  _wire->setWireTimeout(DHT20_WIRE_TIME_OUT, true);
-  return isConnected(struct DHT20 *sens);
+  return i2c_init(GROVE_I2C_INST,200*1000)>0;
 }
 
 
