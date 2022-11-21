@@ -166,14 +166,14 @@ int  readData(struct DHT20 *sens)
   //  GET DATA
   const uint8_t length = 7;
   //int bytes = _wire->requestFrom(DHT20_ADDRESS, length);
-  uin8_t bytes;
+  uint8_t bytes;
 
-    int32_t ret=i2c_read_blocking(GROVE_I2C_INST,DHT20_ADDRESS,*bytes,length,false);
+    int32_t ret=i2c_read_blocking(GROVE_I2C_INST,DHT20_ADDRESS,*bytes,1,false);
     if (ret=0){
         bytes=0;
     }else{
-        //emmä tiiä
-        //we need to asign something to _bits
+      i2c_read_blocking(GROVE_I2C_INST,DHT20_ADDRESS,*sens->_bits,length,false);
+      //laita &sens._bits 
     }
 
     /*
@@ -221,7 +221,6 @@ int  convert(struct DHT20 *sens)
   sens->_temperature = raw * 1.9073486328125e-4 - 50;  //  ==> / 1048576.0 * 200 - 50;
 
   //  TEST CHECKSUM
-  //                    vv en tiedä tarvitseeko pointer. 
   uint8_t sens->_crc = _crc8(sens->_bits, 6);
   //  Serial.print(_crc, HEX);
   //  Serial.print("\t");
@@ -238,13 +237,13 @@ int  convert(struct DHT20 *sens)
 //
 float  getHumidity(struct DHT20 *sens)
 {
-  return sens->_humidity + _humOffset;
+  return sens->_humidity + sens->_humOffset;
 };
 
 
 float  getTemperature(struct DHT20 *sens)
 {
-  return sens->_temperature + _tempOffset;
+  return sens->_temperature + sens->_tempOffset;
 };
 
 
@@ -420,7 +419,6 @@ uint8_t val =0xB0 | reg;
 /*
   _wire->beginTransmission(DHT20_ADDRESS);
   _wire->write(0xB0 | reg);
-  //               ???
   _wire->write(value[1]);
   _wire->write(value[2]);
   if (_wire->endTransmission() != 0) return false;
