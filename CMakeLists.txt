@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Pull in SDK (must be before project)
+include(pico-sdk/pico_sdk_init.cmake)
 include(pico-sdk/external/pico_sdk_import.cmake)
 
 project(iot_suunnittelun_perusteet_nopeusmittari C CXX ASM)
@@ -24,11 +25,14 @@ add_executable(nopeusmittari
 )
 
 add_subdirectory("grove-lcd-pico")
-
 target_include_directories(rgb_lcd PUBLIC "grove-lcd-pico")
 target_link_directories(rgb_lcd PUBLIC "grove-lcd-pico")
 
-target_link_libraries(nopeusmittari pico_stdlib hardware_i2c rgb_lcd pico_binary_info)
+add_subdirectory("dht20")
+target_include_directories(dht20 PUBLIC "dht20")
+target_link_directories(dht20 PUBLIC "dht20")
+
+target_link_libraries(nopeusmittari pico_stdlib hardware_i2c rgb_lcd pico_binary_info dht20)
 
 pico_enable_stdio_usb(nopeusmittari 1)
 pico_enable_stdio_uart(nopeusmittari 0)
