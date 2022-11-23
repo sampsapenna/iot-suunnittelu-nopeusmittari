@@ -43,7 +43,7 @@ bool reserved_addr(uint8_t addr) {
 int setup() {
     // Set up stdio
     stdio_init_all();
-    sleep_ms(5000);
+    sleep_ms(1000);
     printf("Running controller setup.\n");
 
 #ifndef PICO_DEFAULT_LED_PIN
@@ -61,14 +61,14 @@ int setup() {
     // set GP22 as input for optoencoder pulse
     gpio_init(OPTOENCODER_GPIO_PIN);
     gpio_set_dir(OPTOENCODER_GPIO_PIN, GPIO_IN);
-    gpio_set_pulls(OPTOENCODER_GPIO_PIN, false, false);
+    gpio_set_pulls(OPTOENCODER_GPIO_PIN, true, false);
     printf("Enabling optoencoder pin input hysteresis.\n");
     gpio_set_input_hysteresis_enabled(OPTOENCODER_GPIO_PIN, true);
     printf("Initialized optoencoder input pin.\n");
 
     printf("Setting up i2c\n");
     // setup i2c
-    i2c_init(i2c0, 100 * 1000);
+    i2c_init(i2c0, 100000);
     gpio_set_function(I2C0_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C0_SCL, GPIO_FUNC_I2C);
     gpio_pull_up(I2C0_SDA);
@@ -85,6 +85,7 @@ int setup() {
 
     // Set up temp and humid sensor
     printf("Initialize DHT20.\n");
+    sleep_ms(150);
     DHT20_init(sens);
     printf("Initialized DHT20.\n");
 
@@ -127,19 +128,24 @@ int setup() {
 }
 
 int loop() {
+    int ret = 0;
     int opto_status = 0;
     int elapsed_time = 0;
     int trigger_refresh = 0;
     bool last_tick_opto_status = false;
     float speed_ms = 0;
+    int elapsed_temp = 0;
+
+    float t = 0.0;
+    float h = 0.0;
 
     while(1) {
-        opto_status = gpio_get(OPTOENCODER_GPIO_PIN);
+        opto_status = !(gpio_get(OPTOENCODER_GPIO_PIN));
 
         gpio_put(PICO_DEFAULT_LED_PIN, opto_status > 0 ? true : false);
 
         if (opto_status) {
-            if (!last_tick_opto_status) {
+            if (!last_tick_opto_status && elapsed_time > 200) {
                 last_tick_opto_status = true;
                 speed_ms = (float)LENGTH_PER_ROTATION / (float)PULSES_PER_ROTATION / (float)elapsed_time * 3.6;
                 if (elapsed_time > 0) {
@@ -154,26 +160,52 @@ int loop() {
             last_tick_opto_status = false;
         }
 
+        if (trigger_refresh == 0) {
+            if (
+                elapsed_temp > 2500
+            ) {
+                printf("Requesting data.\n");
+                ret = requestData(sens);
+                printf("Wrote %d bytes when requesting data.\n", ret);
+            }
+        }
+
+        if (trigger_refresh == 80) {
+            if (
+                elapsed_temp > 2500
+            ) {
+                ret = readData(sens);
+                if (ret == DHT20_ERROR_BYTES_ALL_ZERO) {
+                    printf("All zero.\n");
+                }
+                if (ret == PICO_ERROR_GENERIC) {
+                    printf("Couldn't reach device.");
+                }
+                printf("Read %d bytes from DHT20.\n", ret);
+                convert(sens);
+                t = getTemperature(sens);
+                h = getHumidity(sens);
+                sprintf(th, "%3.2f %3.1f", t, h);
+                printf("Current temp vals are %f %f", t, h);
+                printf("Temp bits: \n");
+                printf(
+                    "%d %d %d %d %d %d %d \n",
+                    sens->_bits[0],
+                    sens->_bits[1],
+                    sens->_bits[2],
+                    sens->_bits[3],
+                    sens->_bits[4],
+                    sens->_bits[5],
+                    sens->_bits[6]
+                );
+                elapsed_temp = 0;
+            }
+        }
+
         if (trigger_refresh >= 500) {
             trigger_refresh = 0;
             clear(disp);
             setCursor(disp, 0, 0);
-            resetSensor(sens);
-            sleep_ms(10);
-            read(sens);
-            sprintf(th, "%3.2f %3.1f", getTemperature(sens), getHumidity(sens));
-            printf("Current temp vals are %s\n", th);
-            printf("Temp bits: \n");
-            printf(
-                "%d %d %d %d %d %d %d \n",
-                sens->_bits[0],
-                sens->_bits[1],
-                sens->_bits[2],
-                sens->_bits[3],
-                sens->_bits[4],
-                sens->_bits[5],
-                sens->_bits[6]
-            );
 
             for (uint32_t c = 0; c < 7; c++) {
                 write(disp, speed_str[c]);
@@ -195,6 +227,7 @@ int loop() {
 
         sleep_ms(1);
         elapsed_time++;
+        elapsed_temp++;
         trigger_refresh++;
     }
     return 0;

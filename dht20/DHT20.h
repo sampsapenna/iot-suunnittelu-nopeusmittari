@@ -41,12 +41,13 @@
 #define DHT20_ERROR_READ_TIMEOUT -14
 #define DHT20_ERROR_LASTREAD -15
 
-
-#ifdef USE_I2C_1
-#define I2C_INST i2c1
-#else
 #define I2C_INST i2c0
-#endif
+
+// #ifdef USE_I2C_1
+// #define I2C_INST i2c1
+// #else
+// #define I2C_INST i2c0
+// #endif
 
 
 typedef struct DHT20 {

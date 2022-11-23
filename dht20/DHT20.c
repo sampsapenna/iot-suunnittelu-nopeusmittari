@@ -25,6 +25,13 @@ void DHT20_init(struct DHT20 *sens){
   sens->_status      = 0;
   sens->_lastRequest = 0;
   sens->_lastRead    = 0;
+
+  sleep_ms(100);
+
+  if (readStatus(sens) != 0x18) {
+    resetSensor(sens);
+    sleep_ms(100);
+  }
 }
 
 
@@ -32,16 +39,31 @@ void DHT20_init(struct DHT20 *sens){
 //  use with care.
 uint8_t  resetSensor(struct DHT20 *sens)
 {
-  uint8_t count = 255;
-  if ((readStatus(sens) & 0x18) != 0x18)
-  {
-    count++;
-    if (_resetRegister(0x1B)) count++;
-    if (_resetRegister(0x1C)) count++;
-    if (_resetRegister(0x1E)) count++;
-    sleep_ms(10);
-  }
-  return count;
+  uint8_t reg1[3] = {0x1B, 0x00, 0x00};
+  uint8_t reg2[3] = {0x1C, 0x00, 0x00};
+  uint8_t reg3[3] = {0x1E, 0x00, 0x00};
+
+  i2c_write_blocking(
+    I2C_INST,
+    DHT20_ADDRESS,
+    reg1,
+    3,
+    false
+  );
+  i2c_write_blocking(
+    I2C_INST,
+    DHT20_ADDRESS,
+    reg2,
+    3,
+    false
+  );
+  i2c_write_blocking(
+    I2C_INST,
+    DHT20_ADDRESS,
+    reg3,
+    3,
+    false
+  );
 }
 
 
@@ -77,17 +99,23 @@ int  read(struct DHT20 *sens)
 // this seems important, page 10 from datasheet
 int requestData(struct DHT20 *sens) {
   // reset sensor if needed.
-  resetSensor(sens);
+  int ret;
+  if (!ret) {
+    return -1;
+  }
+
+  uint8_t message[3] = {0xAC, 0x33, 0x00};
+
+  ret = i2c_write_blocking(
+    I2C_INST,
+    DHT20_ADDRESS,
+    message,
+    3,
+    false
+  );
   
-  uint8_t mes1 = 0xAC;
-  uint8_t mes2 = 0x33;
-  uint8_t mes3 = 0x00;
-  
-  i2c_write_blocking(I2C_INST,DHT20_ADDRESS,&mes1,1,false);
-  i2c_write_blocking(I2C_INST,DHT20_ADDRESS,&mes2,1,false);
-  i2c_write_blocking(I2C_INST,DHT20_ADDRESS,&mes3,1,false);
   sens->_lastRequest = to_us_since_boot(get_absolute_time()) / 1000;
-  return 0;
+  return ret;
 }
 
 
@@ -96,7 +124,10 @@ int readData(struct DHT20 *sens)
   //  GET DATA
   const uint8_t length = 7;
 
-  int bytes = i2c_read_blocking(
+  int bytes;
+retry_bytes:
+
+  bytes = i2c_read_blocking(
       I2C_INST,
       DHT20_ADDRESS,
       sens->_bits,
@@ -104,16 +135,11 @@ int readData(struct DHT20 *sens)
       false
   );
 
-  bool allZero = true;
-  for (int i = 0; i < length; i++) {
-    if (sens->_bits[i] > 0) {
-      allZero = false;
-      break;
-    }
+  if (sens->_bits[0] & 0x80 == 0) {
+    sleep_ms(20);
+    goto retry_bytes;
   }
-  if (allZero) {
-    return DHT20_ERROR_BYTES_ALL_ZERO;
-  }
+
   sens->_lastRead = to_us_since_boot(get_absolute_time()) / 1000;
   return bytes;
 }
@@ -286,27 +312,14 @@ static uint8_t _crc8(uint8_t *ptr, uint8_t len)
 //  other values unknown.
 bool _resetRegister(uint8_t reg)
 {
-  uint8_t value[3];
-  uint8_t nill = 0x00;
+  uint8_t value[3] = {0x00, 0x00, 0x00};
+  value[0] = reg;
+
   i2c_write_blocking(
     I2C_INST,
     DHT20_ADDRESS,
-    &reg,
-    1,
-    false
-  );
-  i2c_write_blocking(
-    I2C_INST,
-    DHT20_ADDRESS,
-    &nill,
-    1,
-    false
-  );
-  i2c_write_blocking(
-    I2C_INST,
-    DHT20_ADDRESS,
-    &nill,
-    1,
+    value,
+    3,
     false
   );
 
@@ -321,26 +334,13 @@ bool _resetRegister(uint8_t reg)
   );
   sleep_ms(10);
 
-  uint8_t val = 0xB0 | reg;
+  value[0] = 0xB0 | reg;
+
   i2c_write_blocking(
     I2C_INST,
     DHT20_ADDRESS,
-    &val,
-    1,
-    false
-  );
-  i2c_write_blocking(
-    I2C_INST,
-    DHT20_ADDRESS,
-    &value[1],
-    1,
-    false
-  );
-  i2c_write_blocking(
-    I2C_INST,
-    DHT20_ADDRESS,
-    &value[2],
-    1,
+    value,
+    3,
     false
   );
   sleep_ms(5);
