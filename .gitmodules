@@ -4,3 +4,6 @@
 [submodule "grove-lcd-pico"]
 	path = grove-lcd-pico
 	url = https://github.com/sampsapenna/grove-lcd-pico.git
+[submodule "dht20-pico"]
+	path = dht20-pico
+	url = https://github.com/sampsapenna/dht20-pico.git
