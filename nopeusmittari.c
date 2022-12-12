@@ -24,6 +24,7 @@
 #define PULSES_PER_ROTATION 1
 #endif
 
+// Use alt pins 8, 9 for i2c, since that's what the grove shield uses
 #define I2C0_SDA 8
 #define I2C0_SCL 9
 
@@ -72,8 +73,10 @@ void opto_interrupt_callback(uint gpio, uint32_t event_mask) {
 
     printf("Flagging a falling edge from speed sensor with duration of %dms.\n", tick_duration);
     speed_ms = ((float)LENGTH_PER_ROTATION / (float)PULSES_PER_ROTATION / (float)tick_duration) * 3.6;
-    // handle weird edge cases with elapsed time of zero
+    // handle weird edge cases with elapsed time of zero, shouldn't happen
+    // in current implementation using internal clock.
     if (isinf(speed_ms)) {
+        printf("Ignoring infinite speed from 0 elapsed time.");
         speed_ms = 0.0;
     }
 
@@ -86,16 +89,17 @@ Repeating.
 */
 bool screen_callback(repeating_timer_t *rt)
 {
+    // Refresh buffers
     sprintf(curspd_format_buf, "%3.2f", speed_ms);
     sprintf(curtemp_format_buf, "%3.2f", getTemperature(sens));
     sprintf(curhumid_format_buf, "%3.2f", getHumidity(sens));
-    // Update speed
+    // Update displayed speed
     setCursor(disp, 7, 0);
     for (uint32_t c = 0; c < 4; c++)
     {
         write(disp, curspd_format_buf[c]);
     }
-    // Update temperature and humidity
+    // Update displayed temperature and humidity
     setCursor(disp, 0, 1);
     for (uint32_t c = 0; c < 5; c++)
     {
@@ -109,7 +113,7 @@ bool screen_callback(repeating_timer_t *rt)
     return true;
 }
 
-// Pre-declare retrieval since retrieval and refresh are interdependent
+// Pre-declare retrieval since retrieval and refresh call each other
 int64_t temperature_retrieval_callback(alarm_id_t, void *);
 
 /*
@@ -158,6 +162,9 @@ int64_t temperature_retrieval_callback(alarm_id_t id, void *user_data)
     return 0;
 }
 
+/*
+Setup relevant RP2040 features and display boot messages.
+*/
 int setup()
 {
     // Set up stdio
@@ -279,6 +286,9 @@ int setup()
     return 0;
 }
 
+/*
+Main starts the timers and sleeps indefenetly.
+*/
 int main()
 {
     int ret;
