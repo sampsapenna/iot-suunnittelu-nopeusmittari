@@ -28,9 +28,9 @@ add_subdirectory("grove-lcd-pico")
 target_include_directories(rgb_lcd PUBLIC "grove-lcd-pico")
 target_link_directories(rgb_lcd PUBLIC "grove-lcd-pico")
 
-add_subdirectory("dht20")
-target_include_directories(dht20 PUBLIC "dht20")
-target_link_directories(dht20 PUBLIC "dht20")
+add_subdirectory("dht20-pico")
+target_include_directories(dht20 PUBLIC "dht20-pico")
+target_link_directories(dht20 PUBLIC "dht20-pico")
 
 target_link_libraries(nopeusmittari pico_stdlib hardware_i2c rgb_lcd pico_binary_info dht20)
 
