@@ -21,11 +21,14 @@ add_compile_options(-Wall
         )
 
 add_executable(nopeusmittari
-    nopeusmittari.c
     hw_config.c
+    # simple.c
+    nopeusmittari.c
 )
 
-add_subdirectory("no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI")
+target_link_libraries(nopeusmittari pico_stdlib)
+
+add_subdirectory("no-OS-FatFS-SD-SPI-RPi-Pico/FatFs_SPI" build)
 
 add_subdirectory("grove-lcd-pico")
 target_include_directories(rgb_lcd PUBLIC "grove-lcd-pico")
@@ -35,7 +38,15 @@ add_subdirectory("dht20-pico")
 target_include_directories(dht20 PUBLIC "dht20-pico")
 target_link_directories(dht20 PUBLIC "dht20-pico")
 
-target_link_libraries(nopeusmittari pico_stdlib hardware_i2c rgb_lcd pico_binary_info dht20 FatFs_SPI)
+target_link_libraries(nopeusmittari
+    hardware_i2c
+    rgb_lcd
+    pico_binary_info
+    dht20
+    FatFs_SPI
+    hardware_clocks
+    hardware_adc
+)
 
 pico_enable_stdio_usb(nopeusmittari 1)
 pico_enable_stdio_uart(nopeusmittari 0)

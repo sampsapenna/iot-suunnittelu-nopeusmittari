@@ -68,6 +68,31 @@ DHT20 sensStruct;
 DHT20 *sens = &sensStruct;
 
 /*
+Initialize the csv file.
+*/
+void init_sd_card_file() {
+    char full_print_string[30] = "Speed,Temperature,Humidity\n";
+    sd_card_t *pSD = sd_get_by_num(0);
+    FRESULT fr = f_mount(&pSD->fatfs, pSD->pcName, 1);
+    if (FR_OK != fr) {
+        panic("f_mount error: %s (%d)\n", FRESULT_str(fr), fr);
+    }
+    FIL fil;
+    const char filename[16] = "sensor_data.csv";
+    fr = f_open(&fil, filename, FA_WRITE);
+    if (FR_OK != fr && FR_EXIST != fr)
+        panic("f_open(%s) error: %s (%d)\n", filename, FRESULT_str(fr), fr);
+    if (f_printf(&fil,full_print_string) < 0) {
+        printf("f_printf failed\n");
+    }
+    fr = f_close(&fil);
+    if (FR_OK != fr) {
+        printf("f_close error: %s (%d)\n", FRESULT_str(fr), fr);
+    }
+    f_unmount(pSD->pcName);
+}
+
+/*
 Dump latest records to sd card.
 */
 void write_to_sd_card() {
@@ -81,6 +106,8 @@ void write_to_sd_card() {
     );
 
     // printf("Writing following string to SD Card: %s", full_print_string);
+
+    // printf("The amount of SD cards on list is: %s\n", sd_get_num());
 
     printf("Opening sdcard 0.\n");
 
@@ -162,8 +189,6 @@ bool screen_callback(repeating_timer_t *rt)
         write(disp, curhumid_format_buf[c]);
     }
 
-    write_to_sd_card();
-
     return true;
 }
 
@@ -223,7 +248,8 @@ int setup()
 {
     // Set up stdio
     stdio_init_all();
-    sleep_ms(2500);
+    time_init();
+    sleep_ms(500);
     printf("Running controller setup.\n");
 
 #ifndef PICO_DEFAULT_LED_PIN
@@ -337,6 +363,8 @@ int setup()
 
     printf("Speedometer initialization successful.\n");
 
+    init_sd_card_file();
+
     return 0;
 }
 
@@ -360,7 +388,10 @@ int main()
         NULL,
         &timerinfo
     );
-    sleep_until(-1);
+    for (;;) {
+        sleep_ms(1000);
+        write_to_sd_card();
+    }
     return 0;
 failover:
     return ret;
